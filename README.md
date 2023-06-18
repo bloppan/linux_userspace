@@ -5,7 +5,7 @@ Power ON/OFF is controlled by GPIO. The output LED configuration is sent through
 
 ![pinout](http://mbed.org/media/uploads/chris/pca9532pinout.png)
 
-LED controller users shouldn't care about the low level (for example, if the communication between device and processor is through I2C, SPI, UART, or another). They only need to know the public API of libPCA9532 to control it. 
+LED controller users shouldn't care about the low level details, such as the bus communication between device and processor. They only need to know the public API of libPCA9532 to control it. 
 
 Scheme below shows how low level shared libraries are loaded by other shared libraries and by the test application.
 
