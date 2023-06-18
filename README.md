@@ -1,13 +1,13 @@
 # Linux userspace examples
 This repository shows how to manage the LED controller PCA9532 from Linux userspace. For many types of devices, creating a Linux kernel driver is overkill. The logic of controlling the device does not necessarily have to be within the kernel. Running the driver in userspace simplifies development and reduces the risk of serious bugs within a kernel module.
 
-Power ON/OFF is controlled by GPIO. The output LED configuration is sent through I2C communication bus to PCA9532.
+Power ON/OFF is controlled by GPIO. The output LED configuration is sent through I2C bus to PCA9532.
 
 ![pinout](http://mbed.org/media/uploads/chris/pca9532pinout.png)
 
-LED controller users shouldn't care about the low level (if the communication between device and processor is through I2C, SPI, UART, or another). They only need to know the public API of libPCA9532 to control it. 
+LED controller users shouldn't care about the low level (for example, if the communication between device and processor is through I2C, SPI, UART, or another). They only need to know the public API of libPCA9532 to control it. 
 
-Scheme below shows how shared libraries are loaded by other low level shared libraries and by the test application.
+Scheme below shows how low level shared libraries are loaded by other shared libraries and by the test application.
 
 ![structure](https://imgur.com/05qfkYi.jpg)
 
