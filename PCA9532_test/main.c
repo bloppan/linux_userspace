@@ -5,7 +5,7 @@
  *      Author: bernardo
  */
 
-#include "../libPCA9532/PCA9532.h"
+#include "../libPCA9532/PCA9532_export.h"
 
 #include <dlfcn.h>
 #include <getopt.h>
