@@ -14,9 +14,6 @@
 #include <dirent.h>
 #include <dlfcn.h>
 
-#include "../common/app_typedef.h"
-#include "../common/app_errors.h"
-
 #include "GPIO.h"
 
 error_t gpio_config(struct gpio *gpio)

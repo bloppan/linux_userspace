@@ -11,9 +11,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-#
-#include "../common/app_typedef.h"
-#include "../common/app_errors.h"
 
 #include "I2C.h"
 
