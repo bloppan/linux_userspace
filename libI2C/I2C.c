@@ -1,7 +1,6 @@
 /*
  * i2c.c
- *
- *      Author: bernardo
+ * Author: bernardo
  */
 
 #include <stdio.h>
@@ -14,7 +13,7 @@
 
 #include "I2C.h"
 
-error_t i2c_read(struct i2c_device *i2c_dev)
+error_t __i2c_read(struct i2c_device *i2c_dev)
 {
 	struct i2c_rdwr_ioctl_data i2c_packet;
 	struct i2c_msg message[2];	// We need 2 structs: one for write and one for read
@@ -52,7 +51,7 @@ error_t i2c_read(struct i2c_device *i2c_dev)
 }
 
 
-error_t i2c_write(struct i2c_device *i2c_dev)
+error_t __i2c_write(struct i2c_device *i2c_dev)
 {
 	struct i2c_rdwr_ioctl_data i2c_packet;
 	struct i2c_msg message[1];			

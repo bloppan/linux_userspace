@@ -1,8 +1,6 @@
 /*
  * PCA9532.h
- *
- *  Created on: Aug 2, 2021
- *      Author: bernardo
+ * Author: bernardo
  */
 
 #ifndef PCA9532_H_
@@ -12,9 +10,8 @@
 #include <stdint.h>
 #include <dlfcn.h>
 
-#include "../libI2C/I2C_export.h"
-#include "../libGPIO/GPIO_export.h"
-
+#include "../libI2C/I2C.h"
+#include "../libGPIO/GPIO.h"
 #include "../common/app_errors.h"
 #include "../common/app_typedef.h"
 
@@ -63,7 +60,10 @@ struct RGB {
 #define	LED_OFF		7
 
 
-
+extern error_t __pca9532_set_led(unsigned id_led, _Bool value);
+extern error_t __pca9532_set_mask_out(uint16_t mask);
+extern error_t __pca9532_open(void);
+extern error_t __set_led_rgb(uint8_t RGBn, struct RGB *LED_RGB);
 
 #endif /* PCA9532_H_ */
 

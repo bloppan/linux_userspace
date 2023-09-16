@@ -1,7 +1,6 @@
 /*
  * gpio.c
- *
- *      Author: bernardo
+ * Author: bernardo
  */
 
 #include <stdio.h>
@@ -16,7 +15,7 @@
 
 #include "GPIO.h"
 
-error_t gpio_config(struct gpio *gpio)
+error_t __gpio_config(struct gpio *gpio)
 {
 	error_t	code_error = NO_ERROR;
 	int8_t 	fd_export;					// File descriptor export file
@@ -70,7 +69,7 @@ error:
 	return code_error;
 }
 
-error_t gpio_free(struct gpio *gpio)
+error_t __gpio_free(struct gpio *gpio)
 {
 	error_t	code_error = NO_ERROR;
 	int8_t 	fd_unexport;			// File descriptor export file
@@ -93,7 +92,7 @@ error_t gpio_free(struct gpio *gpio)
 	return code_error;
 }
 
-error_t gpio_get_value(struct gpio *gpio, unsigned *value)
+error_t __gpio_get_value(struct gpio *gpio, unsigned *value)
 {
 	error_t code_error = NO_ERROR;
 	char 	gpio_value_str[2] = {0}; 	// String gpio
@@ -121,7 +120,7 @@ error:
 	return code_error;
 }
 
-error_t gpio_get_direction(struct gpio *gpio, char *direction)
+error_t __gpio_get_direction(struct gpio *gpio, char *direction)
 {
 	error_t code_error = NO_ERROR;
 
@@ -142,7 +141,7 @@ error_t gpio_get_direction(struct gpio *gpio, char *direction)
 	return code_error;
 }
 
-error_t gpio_set_value(struct gpio *gpio, unsigned value)
+error_t __gpio_set_value(struct gpio *gpio, unsigned value)
 {
 	error_t	code_error = NO_ERROR;
 	char 	gpio_value_str[2] = {0}; 	// String gpio

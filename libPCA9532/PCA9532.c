@@ -1,10 +1,7 @@
 /*
  * PCA9532.c
- *
- *  Created on: Aug 2, 2021
- *      Author: bernardo
+ * Author: bernardo
  */
-
 
 #include "PCA9532.h"
 
@@ -13,6 +10,16 @@
 
 static LED_struct 	LED[NUM_LEDS] = {0};
 static struct i2c_device pca9532_i2c_info = {0};
+
+// GPIO functions pointers
+error_t (*gpio_config)(struct gpio *);
+error_t (*gpio_free)(struct gpio *);
+error_t (*gpio_get_value)(struct gpio *, unsigned *value);
+error_t (*gpio_get_direction)(struct gpio *, char *);
+error_t (*gpio_set_value)(struct gpio *, unsigned value);
+// I2C functions pointers
+error_t (*i2c_read)(struct i2c_device *);
+error_t (*i2c_write)(struct i2c_device *);
 
 static error_t pca9532_write_output(void)
 {
@@ -35,7 +42,7 @@ static error_t pca9532_write_output(void)
 	return error_code;
 }
 
-error_t pca9532_set_led(unsigned id_led, _Bool value)
+error_t __pca9532_set_led(unsigned id_led, _Bool value)
 {
 	if(id_led < 0 || id_led >= NUM_LEDS)
 		return APP_REPORT(PCA9532, INVALID_VALUE);
@@ -49,7 +56,7 @@ error_t pca9532_set_led(unsigned id_led, _Bool value)
 /*
 *	Set LED 12 to LED 1 values from uint16 mask
 */
-error_t pca9532_set_mask_out(uint16_t mask)
+error_t __pca9532_set_mask_out(uint16_t mask)
 {
 	int i = NUM_LEDS;
 	uint16_t bit = (1 << (NUM_LEDS - 1));
@@ -63,7 +70,7 @@ error_t pca9532_set_mask_out(uint16_t mask)
 	return pca9532_write_output();
 }
 
-error_t set_led_rgb(uint8_t RGBn, struct RGB *LED_RGB)
+error_t __set_led_rgb(uint8_t RGBn, struct RGB *LED_RGB)
 {
 	if(RGBn < 0 || RGBn >= NUM_RGB)
 		return APP_REPORT(PCA9532, INVALID_VALUE);
@@ -147,7 +154,7 @@ static error_t pca9532_blink_config(void)
 
 }
 
-error_t pca9532_open(void)
+error_t __pca9532_open(void)
 {
 	error_t error_code = NO_ERROR;
 
@@ -165,15 +172,15 @@ error_t pca9532_open(void)
 		error_code = APP_REPORT(PCA9532, LOADING_LIBRARY);
 
 	// Load GPIO functions
-	gpio_config = (error_t ( *)(struct gpio *)) dlsym(hdlr_gpio, "gpio_config");
-	gpio_free = (error_t ( *)(struct gpio *)) dlsym(hdlr_gpio, "gpio_free");
-	gpio_get_value = (error_t ( *)(struct gpio *, unsigned *value)) dlsym(hdlr_gpio, "gpio_get_value");
-	gpio_get_direction = (error_t ( *)(struct gpio *)) dlsym(hdlr_gpio, "gpio_get_direction");
-	gpio_set_value = (error_t ( *)(struct gpio *, unsigned value)) dlsym(hdlr_gpio, "gpio_set_value");
+	gpio_config = (error_t ( *)(struct gpio *)) dlsym(hdlr_gpio, "__gpio_config");
+	gpio_free = (error_t ( *)(struct gpio *)) dlsym(hdlr_gpio, "__gpio_free");
+	gpio_get_value = (error_t ( *)(struct gpio *, unsigned *value)) dlsym(hdlr_gpio, "__gpio_get_value");
+	gpio_get_direction = (error_t ( *)(struct gpio *, char *)) dlsym(hdlr_gpio, "__gpio_get_direction");
+	gpio_set_value = (error_t ( *)(struct gpio *, unsigned value)) dlsym(hdlr_gpio, "__gpio_set_value");
 
 	// Load I2C functions
-	i2c_read = (error_t ( *)(struct i2c_device *)) dlsym(hdlr_i2c, "i2c_read");
-	i2c_write = (error_t ( *)(struct i2c_device *)) dlsym(hdlr_i2c, "i2c_write");
+	i2c_read = (error_t ( *)(struct i2c_device *)) dlsym(hdlr_i2c, "__i2c_read");
+	i2c_write = (error_t ( *)(struct i2c_device *)) dlsym(hdlr_i2c, "__i2c_write");
 
 	// Configure PCA9532 gpio struct
 	struct gpio pca9532_en;
